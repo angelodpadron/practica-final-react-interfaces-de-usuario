@@ -24,12 +24,14 @@ const Game = (props) => {
         let playerChoice = playerOne.weapon
         let computerChoice = playerTwo.weapon        
 
-        if (playerChoice !== undefined && playerTwo !== undefined){
+        if (playerChoice !== undefined && computerChoice !== undefined){
 
             if(playerChoice === computerChoice){
                 setMatchTie(true)
                 setMatchWinner(undefined)
                 setMatchLoser(undefined)
+                setPlayerOne({...playerOne, weapon: undefined})
+                setPlayerTwo({...playerTwo, weapon: undefined})
             }else {
 
                 if(choices[playerChoice].defeats.indexOf(computerChoice) > -1){
@@ -38,6 +40,8 @@ const Game = (props) => {
                     setMatchWinner(playerOne)
                     setMatchLoser(playerTwo)
                     setMatchTie(false)
+                    setPlayerOne({...playerOne, weapon: undefined})
+                    setPlayerTwo({...playerTwo, weapon: undefined})
                 }    
                 else{
 
@@ -46,6 +50,8 @@ const Game = (props) => {
                     setMatchWinner(playerTwo)
                     setMatchLoser(playerOne)
                     setMatchTie(false)
+                    setPlayerOne({...playerOne, weapon: undefined})
+                    setPlayerTwo({...playerTwo, weapon: undefined})
                 }
             }        
         }
@@ -56,6 +62,12 @@ const Game = (props) => {
         setPlayerOne({...playerOne, weapon: event.target.name})
         setPlayerTwo({...playerTwo, weapon: choicesArray[Math.floor(Math.random() * choicesArray.length)]})        
     }
+
+    const canDraw = () => {
+        let playerChoice = playerOne.weapon
+        let computerChoice = playerTwo.weapon 
+        return !(playerChoice !== undefined && computerChoice !== undefined)
+    }
     
     return (
         <>       
@@ -65,15 +77,15 @@ const Game = (props) => {
             <small>Choose and draw!</small>
             <hr/>
             <div className="btn-group btn-group-lg" role="group">
-                <button class="btn btn-light" name='rock' onClick={initWeapon}>✊</button>
-                <button class="btn btn-light" name='paper' onClick={initWeapon}>✋</button>
-                <button class="btn btn-light" name='scissor' onClick={initWeapon}>✌️</button>
-                <button class="btn btn-light" name='lizard' onClick={initWeapon}>🤏</button>
-                <button class="btn btn-light" name='spock' onClick={initWeapon}>🖖</button>                
+                <button class="btn btn-light shadow-none" name='rock' onClick={initWeapon}>✊</button>
+                <button class="btn btn-light shadow-none" name='paper' onClick={initWeapon}>✋</button>
+                <button class="btn btn-light shadow-none" name='scissor' onClick={initWeapon}>✌️</button>
+                <button class="btn btn-light shadow-none" name='lizard' onClick={initWeapon}>🤏</button>
+                <button class="btn btn-light shadow-none" name='spock' onClick={initWeapon}>🖖</button>                
             </div>
             <hr/>
             <div>
-                <button class="btn btn-success" onClick={playMatch}>Draw!</button>
+                <button class="btn btn-success" onClick={playMatch} disabled={canDraw()}>Draw!</button>
             </div>
             <hr/>
             <div>
