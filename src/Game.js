@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import './Game.css'
+import { Link } from 'react-router-dom'
+
 
 const Game = (props) => {
     
     const [playerOne, setPlayerOne] = useState({name: props.location.state.nick, wins: 0, weapon: undefined})
     const [playerTwo, setPlayerTwo] = useState({name: 'CPU', wins: 0, weapon: undefined})
     const [matchWinner, setMatchWinner] = useState(undefined)
+    const [matchLoser, setMatchLoser] = useState(undefined)
     const [matchTie, setMatchTie] = useState(false)
 
     const choices = {
@@ -13,7 +17,7 @@ const Game = (props) => {
         scissor: {name: "Scissor", defeats: ["paper", "lizard"]},
         lizard: {name: "Lizard", defeats:["paper","spock"]},
         spock: {name: "Spock", defeats:["scissor","rock"]}
-    }  
+    }    
     
     const playMatch = () => {
 
@@ -25,12 +29,14 @@ const Game = (props) => {
             if(playerChoice === computerChoice){
                 setMatchTie(true)
                 setMatchWinner(undefined)
+                setMatchLoser(undefined)
             }else {
 
                 if(choices[playerChoice].defeats.indexOf(computerChoice) > -1){
                     let prev = playerOne.wins + 1
                     setPlayerOne({...playerOne, wins: prev})
                     setMatchWinner(playerOne)
+                    setMatchLoser(playerTwo)
                     setMatchTie(false)
                 }    
                 else{
@@ -38,6 +44,7 @@ const Game = (props) => {
                     let prev = playerTwo.wins + 1
                     setPlayerTwo({...playerTwo, wins: prev})
                     setMatchWinner(playerTwo)
+                    setMatchLoser(playerOne)
                     setMatchTie(false)
                 }
             }        
@@ -47,31 +54,46 @@ const Game = (props) => {
     const initWeapon = event => {
         let choicesArray = Object.keys(choices)
         setPlayerOne({...playerOne, weapon: event.target.name})
-        setPlayerTwo({...playerTwo, weapon: choicesArray[Math.floor(Math.random() * choicesArray.length)]})
-        playMatch()
+        setPlayerTwo({...playerTwo, weapon: choicesArray[Math.floor(Math.random() * choicesArray.length)]})        
     }
     
     return (
+        <>       
         <div className="container text-center">
-            <div>Welcome, {playerOne.name}</div>
+            
+            <h1>Playing against the CPU</h1>
+            <small>Choose and draw!</small>
+            <hr/>
+            <div className="btn-group btn-group-lg" role="group">
+                <button class="btn btn-light" name='rock' onClick={initWeapon}>✊</button>
+                <button class="btn btn-light" name='paper' onClick={initWeapon}>✋</button>
+                <button class="btn btn-light" name='scissor' onClick={initWeapon}>✌️</button>
+                <button class="btn btn-light" name='lizard' onClick={initWeapon}>🤏</button>
+                <button class="btn btn-light" name='spock' onClick={initWeapon}>🖖</button>                
+            </div>
+            <hr/>
             <div>
-                <button name='rock' onClick={initWeapon}>✊</button>
-                <button name='paper' onClick={initWeapon}>✋</button>
-                <button name='scissor' onClick={initWeapon}>✌️</button>
-                <button name='lizard' onClick={initWeapon}>🤏</button>
-                <button name='spock' onClick={initWeapon}>🖖</button>
-            </div>           
+                <button class="btn btn-success" onClick={playMatch}>Draw!</button>
+            </div>
+            <hr/>
             <div>
-                <p>Player: {playerOne.wins}</p>
-                <p>CPU: {playerTwo.wins}</p>                
+                <h4>{playerOne.name}: {playerOne.wins}</h4>
+                <h4>{playerTwo.name}: {playerTwo.wins}</h4>                                
             </div>
             {   matchWinner && 
-                <div>{matchWinner.name} wins this match</div>
+                <div>
+                    <h5>{matchWinner.name} wins this match.</h5> 
+                    <h5>{choices[matchWinner.weapon].name} defeats {choices[matchLoser.weapon].name}</h5>
+                </div>
             }
             {   matchTie &&
-                <div>Round tied!</div>
+                <div>
+                    <h5>Round tied!</h5>
+                </div>
             }
+            
         </div>
+        </>
     )
     
 }
