@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function SoloMode({initWeapon, canChoose, canDraw, playMatch, playerOne, playerTwo, matchResults, choices}){    
+export default function GameRender({initWeapon, canChoose, canDraw, playMatch, playerOne, playerTwo, matchResults, choices}){    
     
     const buildChoicesButtons = (key) => {        
             let url = '/' + key + '_button.png'
@@ -39,12 +39,17 @@ export default function SoloMode({initWeapon, canChoose, canDraw, playMatch, pla
 
     return(
         <>       
-        <div className="container text-center">            
-            <h1>Playing against the CPU</h1>
+        <div className="container text-center">
+            <h1>{playerOne.name} VS {playerTwo.name}</h1>
             <small>Choose and draw!</small>
-            <hr/>
+            <hr/>            
             <div>
                 {Object.keys(choices).map(key => buildChoicesButtons(key))}
+            </div>
+            <div>
+                {!playerOne.weapon && <h3>{playerOne.name}'s turn...</h3> 
+                || !playerTwo.weapon && <h3>{playerTwo.name}'s turn...</h3>
+                }                
             </div>
             <hr/>
             <div>                
