@@ -14,7 +14,8 @@ const Landing = () => {
     }
 
     return(
-        <div className='container text-center'>
+        <>
+        <div className='container-fluid text-center'>
             <h1>Enter a nickname</h1>
             <input className='form-control-lg' type='text' name='nick' onChange={handleChange} placeholder='nickname...'/>
             <hr/>
@@ -23,6 +24,10 @@ const Landing = () => {
                 <Link to={{pathname: '/game', state: {nick: nick}}} className="btn btn-success">Play</Link>
             </div>}
         </div>
+        {/* <div className='container text-center'>
+            <img src={process.env.PUBLIC_URL + 'logo.png'}/>
+        </div> */}
+        </>
     )
 }
 
