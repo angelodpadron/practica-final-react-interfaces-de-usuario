@@ -1,38 +1,107 @@
-.container {
-    position: fixed;
-    top: 50%;
-    left: 50%;  
-    transform: translate(-50%, -50%);
+.text-right {
     color: white;
-    background-color: rgba(000,000,000,0.1);   
-    border-radius: 25px;  
+}
+
+.container-fluid {
+    color: white;    
+}
+
+.container-fluid .btn{
+    font-size: 40px;        
+}
+
+.container {
+    /* position: fixed; */
+    /* top: 50%;
+    left: 50%;   */
+    /* transform: translate(-50%, -50%); */
+    color: white;
+    /* background-color: rgba(000,000,000,0.2);    */
+    border-radius: 25px;      
 }
 
 .container .btn{
-    font-size: 24px;
-        
+    font-size: 40px;        
 }
 
-/* .container .btn{
-    padding: 15px 25px;
-    font-size: 24px;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    color: #fff;
-    background-color: #2eaece;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 9px #999;
-} */
 
-/* .btn:hover {background-color: #3e8e41}
+.container p{
+    display: inline;
+}
 
-.btn:active {
-    background-color: #3e8e41;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-} */
+input[type="image"]:disabled {
+    opacity: 10%;
+    cursor: default;
+    animation: bounceX 1s infinite alternate;
+}
 
+input[type='image']:hover{
+    transform: scale(1.1, 1.1);    
+    transition: all 500ms; 
+}
 
+.winner{
+    animation: bounceX 0.5s infinite alternate; 
+}
 
+.mirror {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.tie1 {
+    animation: bounceY 0.5s infinite alternate; 
+}
+
+.tie2 {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    animation: bounceYAlt 0.5s infinite alternate; 
+}
+
+.loser {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    animation: shake 0.1s infinite alternate;
+}
+
+@keyframes bounceX {
+    from {
+        transform: translateY(0px);
+    }
+    to {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes bounceY {
+    from {
+        transform: translateX(5px);
+    }
+    to {
+        transform: translateX(-5px);
+    }
+}
+
+@keyframes bounceYAlt{
+    from {
+        transform: translateX(-5px);
+    }
+    to {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
