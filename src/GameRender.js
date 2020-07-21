@@ -41,7 +41,7 @@ export default function GameRender({initWeapon, canChoose, canDraw, playMatch, p
         <>       
         <div className="container text-center">
             <h1>{playerOne.name} VS {playerTwo.name}</h1>
-            <small>Choose and draw!</small>
+            <small>Choose and hit Begin</small>
             <hr/>            
             <div>
                 {Object.keys(choices).map(key => buildChoicesButtons(key))}
@@ -53,7 +53,7 @@ export default function GameRender({initWeapon, canChoose, canDraw, playMatch, p
             </div>
             <hr/>
             <div>                
-                <button class="btn btn-success" onClick={playMatch} disabled={canDraw()}>Draw!</button>
+                <button class="btn btn-success" onClick={playMatch} disabled={canDraw()}>Begin</button>
             </div>            
             <hr/>
             <div>
