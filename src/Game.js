@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Game.css'
 
 import GameRender from './GameRender'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+
 
 const Game = (props) => {
 
-    const [playerOne, setPlayerOne] = useState({name: props.location.state.playerOneNick, wins: 0, weapon: undefined})
-    const [playerTwo, setPlayerTwo] = useState({name: props.location.state.playerTwoNick, wins: 0, weapon: undefined})    
+    const history = useHistory()
+
+    const [playerOne, setPlayerOne] = useState({name: undefined, wins: 0, weapon: undefined})
+    const [playerTwo, setPlayerTwo] = useState({name: undefined, wins: 0, weapon: undefined})    
     const [matchResults, setMatchResults] = useState({winer: undefined, loser: undefined, tie: undefined})
     
-    const soloMode = props.location.state.solo    
+    const [soloMode, setSoloMode] = useState(undefined)   
 
     const choices = {
         rock : {name: "Rock", defeats: ["scissor","lizard"]},
@@ -18,7 +21,17 @@ const Game = (props) => {
         scissor: {name: "Scissor", defeats: ["paper", "lizard"]},
         lizard: {name: "Lizard", defeats:["paper","spock"]},
         spock: {name: "Spock", defeats:["scissor","rock"]}
-    }    
+    }
+    
+    useEffect(() => {
+        if (props.location.state !== undefined){
+            setPlayerOne({...playerOne, name: props.location.state.playerOneNick})
+            setPlayerTwo({...playerTwo, name: props.location.state.playerTwoNick})
+            setSoloMode(props.location.state.solo)
+        }else{
+            history.push('/')
+        }
+    }, [])
     
     const playMatch = () => {
 
@@ -79,7 +92,7 @@ const Game = (props) => {
         let playerOneChoice = playerOne.weapon
         let playerTwoChoice = playerTwo.weapon
         return (playerOneChoice !== undefined && playerTwoChoice !== undefined)
-    }
+    }   
     
     return (
         <>        
